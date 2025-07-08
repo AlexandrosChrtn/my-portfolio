@@ -64,7 +64,7 @@ const Index = () => {
       <header className="border-b border-orange-500/20 bg-gray-950/50 backdrop-blur-sm sticky top-0 z-40">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="text-orange-400 text-xl font-bold">
-            &gt; dev.portfolio
+            Alexandros Chariton
           </div>
           <nav className="hidden md:flex space-x-6">
             <a href="#about" className="hover:text-orange-400 transition-colors">about</a>
@@ -79,7 +79,7 @@ const Index = () => {
       <section className="container mx-auto px-4 py-20 text-center">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-5xl md:text-7xl font-bold mb-6">
-            <span className="text-orange-400">&gt;</span> Hello, World!
+            Hi friend!
           </h1>
           <p className="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed">
             I'm a full-stack developer who speaks fluent code and dreams in algorithms.
@@ -108,7 +108,7 @@ const Index = () => {
 
       {/* About Section */}
       <section id="about" className="container mx-auto px-4 py-16">
-        <h2 className="text-3xl font-bold mb-8 text-orange-400">&gt; about_me.txt</h2>
+        <h2 className="text-3xl font-bold mb-8 text-orange-400">About Me</h2>
         <div className="grid md:grid-cols-2 gap-8">
           <Card className="bg-gray-800 border-gray-700">
             <CardHeader>
@@ -156,7 +156,7 @@ const Index = () => {
 
       {/* Projects Section */}
       <section id="projects" className="container mx-auto px-4 py-16">
-        <h2 className="text-3xl font-bold mb-8 text-orange-400">&gt; projects.json</h2>
+        <h2 className="text-3xl font-bold mb-8 text-orange-400">Projects</h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {githubRepos.map((repo, index) => (
             <Card key={index} className="bg-gray-800 border-gray-700 hover:border-orange-500/50 transition-all group">
@@ -201,7 +201,7 @@ const Index = () => {
 
       {/* Integrations Section */}
       <section id="integrations" className="container mx-auto px-4 py-16">
-        <h2 className="text-3xl font-bold mb-8 text-orange-400">&gt; integrations.md</h2>
+        <h2 className="text-3xl font-bold mb-8 text-orange-400">Integrations</h2>
         
         <div className="grid md:grid-cols-2 gap-8">
           {/* GitHub Integration */}
@@ -261,7 +261,7 @@ const Index = () => {
 
       {/* Contact Section */}
       <section id="contact" className="container mx-auto px-4 py-16">
-        <h2 className="text-3xl font-bold mb-8 text-orange-400">&gt; contact.sh</h2>
+        <h2 className="text-3xl font-bold mb-8 text-orange-400">Contact</h2>
         <Card className="bg-gray-800 border-gray-700 max-w-2xl mx-auto">
           <CardContent className="p-8">
             <div className="space-y-4 text-center">
@@ -291,9 +291,9 @@ const Index = () => {
       {/* Footer */}
       <footer className="border-t border-orange-500/20 bg-gray-950/50 py-8">
         <div className="container mx-auto px-4 text-center text-gray-400">
-          <p>&copy; 2024 Your Name. Built with ❤️ and lots of ☕</p>
+          <p>&copy; 2024 Alexandros Chariton. Built with ❤️ and lots of ☕</p>
           <p className="text-sm mt-2">
-            <span className="text-orange-400">&gt;</span> console.log("Thanks for visiting!");
+            Thanks for visiting!
           </p>
         </div>
       </footer>
