@@ -1,56 +1,105 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Github, ExternalLink, MessageCircle, X, User, Code, Brain, Star, GitFork, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
+interface GitHubRepo {
+  id: number;
+  name: string;
+  description: string | null;
+  stargazers_count: number;
+  forks_count: number;
+  language: string | null;
+  html_url: string;
+  updated_at: string;
+}
+
+interface HuggingFaceModel {
+  _id: string;
+  id: string;
+  likes: number;
+  downloads: number;
+  tags: string[];
+  pipeline_tag: string;
+  library_name: string;
+  createdAt: string;
+  modelId: string;
+}
+
 const Index = () => {
   const [isAssistantOpen, setIsAssistantOpen] = useState(false);
+  const [githubRepos, setGithubRepos] = useState<GitHubRepo[]>([]);
+  const [isLoadingRepos, setIsLoadingRepos] = useState(true);
+  const [huggingFaceModels, setHuggingFaceModels] = useState<HuggingFaceModel[]>([]);
+  const [isLoadingModels, setIsLoadingModels] = useState(true);
 
-  // Placeholder data - will be replaced with real API integrations
-  const githubRepos = [
-    {
-      name: "ai-code-reviewer",
-      description: "Automated code review using LLMs",
-      stars: 142,
-      forks: 23,
-      language: "TypeScript",
-      url: "#"
-    },
-    {
-      name: "data-pipeline-optimizer",
-      description: "ML pipeline optimization toolkit",
-      stars: 89,
-      forks: 16,
-      language: "Python",
-      url: "#"
-    },
-    {
-      name: "neural-network-viz",
-      description: "Interactive neural network visualizer",
-      stars: 267,
-      forks: 45,
-      language: "JavaScript",
-      url: "#"
-    }
-  ];
+  // Fetch GitHub repositories and Hugging Face models
+  useEffect(() => {
+    const fetchGitHubRepos = async () => {
+      try {
+        const response = await fetch('https://api.github.com/users/AlexandrosChrtn/repos');
+        if (!response.ok) {
+          throw new Error('Failed to fetch repositories');
+        }
+        const repos: GitHubRepo[] = await response.json();
+        
+        // Sort by stars (descending) and take top 2
+        const sortedRepos = repos
+          .sort((a, b) => b.stargazers_count - a.stargazers_count)
+          .slice(0, 2);
+        
+        setGithubRepos(sortedRepos);
+      } catch (error) {
+        console.error('Error fetching GitHub repos:', error);
+        // Fallback to placeholder data on error
+        setGithubRepos([
+          {
+            id: 1,
+            name: "EmotivAI",
+            description: "AI-powered emotion recognition system",
+            stargazers_count: 0,
+            forks_count: 0,
+            language: "TypeScript",
+            html_url: "https://github.com/AlexandrosChrtn/EmotivAI",
+            updated_at: "2025-06-16T15:55:58Z"
+          }
+        ]);
+      } finally {
+        setIsLoadingRepos(false);
+      }
+    };
 
-  const huggingFaceModels = [
-    {
-      name: "custom-code-generator",
-      description: "Fine-tuned model for code generation",
-      downloads: "2.1k",
-      url: "#"
-    },
-    {
-      name: "sentiment-analyzer-pro",
-      description: "Advanced sentiment analysis model",
-      downloads: "5.7k",
-      url: "#"
-    }
-  ];
+    const fetchHuggingFaceModels = async () => {
+      try {
+        const response = await fetch('https://huggingface.co/api/models?author=AlexandrosChariton');
+        if (!response.ok) {
+          throw new Error('Failed to fetch Hugging Face models');
+        }
+        const models: HuggingFaceModel[] = await response.json();
+        
+        // Sort by downloads (descending) and take top 2
+        const sortedModels = models
+          .sort((a, b) => b.downloads - a.downloads)
+          .slice(0, 2);
+        
+        setHuggingFaceModels(sortedModels);
+      } catch (error) {
+        console.error('Error fetching Hugging Face models:', error);
+        // Fallback to empty array on error
+        setHuggingFaceModels([]);
+      } finally {
+        setIsLoadingModels(false);
+      }
+    };
+
+    fetchGitHubRepos();
+    fetchHuggingFaceModels();
+  }, []);
+
+
 
   const skills = [
     "JavaScript/TypeScript", "Python", "React", "Node.js", 
@@ -82,9 +131,7 @@ const Index = () => {
             Hi friend!
           </h1>
           <p className="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed">
-            I'm a full-stack developer who speaks fluent code and dreams in algorithms.
-            <br />
-            Building the future, one commit at a time.
+            ML Engineer who loves building things. I love fast paced environments and direct user feedback.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button 
@@ -158,30 +205,30 @@ const Index = () => {
       <section id="projects" className="container mx-auto px-4 py-16">
         <h2 className="text-3xl font-bold mb-8 text-orange-400">Projects</h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {githubRepos.map((repo, index) => (
-            <Card key={index} className="bg-gray-800 border-gray-700 hover:border-orange-500/50 transition-all group">
+          {githubRepos.slice(0, 3).map((repo) => (
+            <Card key={repo.id} className="bg-gray-800 border-gray-700 hover:border-orange-500/50 transition-all group">
               <CardHeader>
                 <CardTitle className="text-lg text-orange-300 group-hover:text-orange-400 transition-colors">
                   {repo.name}
                 </CardTitle>
                 <CardDescription className="text-gray-400">
-                  {repo.description}
+                  {repo.description || "No description available"}
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="flex items-center justify-between text-sm text-gray-400 mb-4">
                   <span className="flex items-center">
                     <span className="w-3 h-3 bg-orange-400 rounded-full mr-2"></span>
-                    {repo.language}
+                    {repo.language || "Unknown"}
                   </span>
                   <div className="flex items-center space-x-3">
                     <span className="flex items-center">
                       <Star className="w-4 h-4 mr-1" />
-                      {repo.stars}
+                      {repo.stargazers_count}
                     </span>
                     <span className="flex items-center">
                       <GitFork className="w-4 h-4 mr-1" />
-                      {repo.forks}
+                      {repo.forks_count}
                     </span>
                   </div>
                 </div>
@@ -189,6 +236,7 @@ const Index = () => {
                   variant="outline" 
                   size="sm" 
                   className="w-full border-orange-500/50 text-orange-300 hover:bg-orange-500/20"
+                  onClick={() => window.open(repo.html_url, '_blank')}
                 >
                   <ExternalLink className="w-4 h-4 mr-2" />
                   View on GitHub
@@ -211,19 +259,55 @@ const Index = () => {
                 <Github className="mr-2 h-5 w-5" />
                 GitHub Activity
               </CardTitle>
-              <CardDescription>Latest public repositories and contributions</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="space-y-4">
-                <div className="text-sm text-gray-400">
-                  🔄 Auto-synced with GitHub API
+              {isLoadingRepos ? (
+                <div className="space-y-3">
+                  <div className="text-sm text-gray-400">Loading repositories...</div>
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className="animate-pulse">
+                      <div className="h-4 bg-gray-700 rounded w-3/4 mb-2"></div>
+                      <div className="h-3 bg-gray-700 rounded w-1/2"></div>
+                    </div>
+                  ))}
                 </div>
-                <div className="text-xs text-gray-500 bg-gray-900 p-3 rounded border-l-4 border-orange-500">
-                  # This section will automatically display your latest public repos
-                  <br />
-                  # and contributions when GitHub integration is active
+              ) : (
+                <div className="space-y-3">
+                  {githubRepos.map((repo) => (
+                    <div key={repo.id} className="border border-gray-700 rounded p-3 hover:border-orange-500/50 transition-colors">
+                      <div className="flex justify-between items-start mb-2">
+                        <div className="font-semibold text-orange-300">{repo.name}</div>
+                        <div className="flex items-center space-x-2 text-xs text-gray-500">
+                          <span className="flex items-center">
+                            <Star className="w-3 h-3 mr-1" />
+                            {repo.stargazers_count}
+                          </span>
+                          <span className="flex items-center">
+                            <GitFork className="w-3 h-3 mr-1" />
+                            {repo.forks_count}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="text-sm text-gray-400 mb-2">
+                        {repo.description || "No description available"}
+                      </div>
+                                             <div className="flex justify-between items-center text-xs">
+                         <span className="text-gray-500">
+                           {repo.language || "Unknown"}
+                         </span>
+                         <Button 
+                           variant="ghost" 
+                           size="sm" 
+                           className="text-orange-400 hover:text-orange-300"
+                           onClick={() => window.open(repo.html_url, '_blank')}
+                         >
+                           View Repo
+                         </Button>
+                       </div>
+                    </div>
+                  ))}
                 </div>
-              </div>
+              )}
             </CardContent>
           </Card>
 
@@ -234,26 +318,54 @@ const Index = () => {
                 <Brain className="mr-2 h-5 w-5" />
                 Hugging Face Models
               </CardTitle>
-              <CardDescription>Published ML models and datasets</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="space-y-3">
-                {huggingFaceModels.map((model, index) => (
-                  <div key={index} className="border border-gray-700 rounded p-3 hover:border-orange-500/50 transition-colors">
-                    <div className="font-semibold text-orange-300">{model.name}</div>
-                    <div className="text-sm text-gray-400 mb-2">{model.description}</div>
-                    <div className="flex justify-between items-center text-xs">
-                      <span className="flex items-center text-gray-500">
-                        <Download className="w-3 h-3 mr-1" />
-                        {model.downloads} downloads
-                      </span>
-                      <Button variant="ghost" size="sm" className="text-orange-400 hover:text-orange-300">
-                        View Model
-                      </Button>
+              {isLoadingModels ? (
+                <div className="space-y-3">
+                  <div className="text-sm text-gray-400">Loading models...</div>
+                  {[1, 2].map((i) => (
+                    <div key={i} className="animate-pulse">
+                      <div className="h-4 bg-gray-700 rounded w-3/4 mb-2"></div>
+                      <div className="h-3 bg-gray-700 rounded w-1/2"></div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {huggingFaceModels.map((model) => (
+                    <div key={model._id} className="border border-gray-700 rounded p-3 hover:border-orange-500/50 transition-colors">
+                      <div className="flex justify-between items-start mb-2">
+                        <div className="font-semibold text-orange-300">{model.id.split('/')[1]}</div>
+                        <div className="flex items-center space-x-2 text-xs text-gray-500">
+                          <span className="flex items-center">
+                            <Download className="w-3 h-3 mr-1" />
+                            {model.downloads}
+                          </span>
+                          <span className="flex items-center">
+                            ❤️ {model.likes}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="text-sm text-gray-400 mb-2">
+                        {model.pipeline_tag} • {model.library_name}
+                      </div>
+                      <div className="flex justify-between items-center text-xs">
+                        <span className="text-gray-500">
+                          {model.tags.slice(0, 2).join(', ')}
+                        </span>
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="text-orange-400 hover:text-orange-300"
+                          onClick={() => window.open(`https://huggingface.co/${model.id}`, '_blank')}
+                        >
+                          View Model
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>
