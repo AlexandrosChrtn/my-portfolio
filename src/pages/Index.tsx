@@ -59,7 +59,7 @@ const Index = () => {
           {
             id: 1,
             name: "EmotivAI",
-            description: "AI-powered emotion recognition system",
+            description: "A slick web UI, see it on GH",
             stargazers_count: 0,
             forks_count: 0,
             language: "TypeScript",
@@ -274,7 +274,11 @@ const Index = () => {
               ) : (
                 <div className="space-y-3">
                   {githubRepos.map((repo) => (
-                    <div key={repo.id} className="border border-gray-700 rounded p-3 hover:border-orange-500/50 transition-colors">
+                    <div 
+                      key={repo.id} 
+                      className="border border-gray-700 rounded p-3 hover:border-orange-500/50 transition-colors cursor-pointer"
+                      onClick={() => window.open(repo.html_url, '_blank')}
+                    >
                       <div className="flex justify-between items-start mb-2">
                         <div className="font-semibold text-orange-300">{repo.name}</div>
                         <div className="flex items-center space-x-2 text-xs text-gray-500">
@@ -291,19 +295,14 @@ const Index = () => {
                       <div className="text-sm text-gray-400 mb-2">
                         {repo.description || "No description available"}
                       </div>
-                                             <div className="flex justify-between items-center text-xs">
-                         <span className="text-gray-500">
-                           {repo.language || "Unknown"}
-                         </span>
-                         <Button 
-                           variant="ghost" 
-                           size="sm" 
-                           className="text-orange-400 hover:text-orange-300"
-                           onClick={() => window.open(repo.html_url, '_blank')}
-                         >
-                           View Repo
-                         </Button>
-                       </div>
+                      <div className="flex justify-between items-center text-xs">
+                        <span className="text-gray-500">
+                          {repo.language || "Unknown"}
+                        </span>
+                        <span className="text-orange-400 hover:text-orange-300">
+                          View Repo
+                        </span>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -333,7 +332,11 @@ const Index = () => {
               ) : (
                 <div className="space-y-3">
                   {huggingFaceModels.map((model) => (
-                    <div key={model._id} className="border border-gray-700 rounded p-3 hover:border-orange-500/50 transition-colors">
+                    <div 
+                      key={model._id} 
+                      className="border border-gray-700 rounded p-3 hover:border-orange-500/50 transition-colors cursor-pointer"
+                      onClick={() => window.open(`https://huggingface.co/${model.id}`, '_blank')}
+                    >
                       <div className="flex justify-between items-start mb-2">
                         <div className="font-semibold text-orange-300">{model.id.split('/')[1]}</div>
                         <div className="flex items-center space-x-2 text-xs text-gray-500">
@@ -351,16 +354,11 @@ const Index = () => {
                       </div>
                       <div className="flex justify-between items-center text-xs">
                         <span className="text-gray-500">
-                          {model.tags.slice(0, 2).join(', ')}
+                          {model.tags.slice(0, 3).join(', ')}
                         </span>
-                        <Button 
-                          variant="ghost" 
-                          size="sm" 
-                          className="text-orange-400 hover:text-orange-300"
-                          onClick={() => window.open(`https://huggingface.co/${model.id}`, '_blank')}
-                        >
+                        <span className="text-orange-400 hover:text-orange-300">
                           View Model
-                        </Button>
+                        </span>
                       </div>
                     </div>
                   ))}
