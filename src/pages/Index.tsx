@@ -102,9 +102,10 @@ const Index = () => {
 
 
   const skills = [
-    "JavaScript/TypeScript", "Python", "React", "Node.js", 
-    "Machine Learning", "Docker", "AWS", "PostgreSQL",
-    "TensorFlow", "PyTorch", "Git", "Linux"
+    "Python", "PyTorch", "HuggingFace", "REST APIs",
+    "Batch Processing", "LLMs", "OpenAI", "Anthropic", "Gemini", "Groq", "Mistral", "TensorFlow",
+    "Caching", "Concurrency", "Linux", "GCP", "Git", "Docker", "JavaScript/TypeScript", "React", "Node.js", 
+    "Azure", "MySQL", "Django", "FastAPI", "Flask"
   ];
 
   return (
@@ -131,7 +132,7 @@ const Index = () => {
             Hi friend!
           </h1>
           <p className="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed">
-            ML Engineer who loves building things. I love fast paced environments and direct user feedback.
+            ML Engineer who loves building things. I love fast paced environments and understanding what the user wants.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button 
@@ -166,13 +167,11 @@ const Index = () => {
             </CardHeader>
             <CardContent className="text-gray-300">
               <p className="mb-4">
-                Passionate developer with 5+ years of experience building scalable applications
-                and machine learning solutions. I love exploring the intersection of AI and
-                traditional software development.
+                Developer with multiple years of experience building scalable applications
+                and machine learning solutions, mostly in e-commerce. I love what I do and I see myself more of a problem solver who does what needs to be done, rather than just an ML engineer.
               </p>
               <p>
-                When I'm not coding, you can find me contributing to open source projects,
-                writing technical blog posts, or experimenting with the latest ML frameworks.
+              When I'm not coding, I am doing something incredibly cool, but I can't tell you about it.
               </p>
             </CardContent>
           </Card>
@@ -183,6 +182,9 @@ const Index = () => {
                 <Brain className="mr-2 h-5 w-5" />
                 Skills & Technologies
               </CardTitle>
+              <CardDescription className="text-gray-400">
+                Technologies I've used in work or projects
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="flex flex-wrap gap-2">
@@ -401,9 +403,9 @@ const Index = () => {
       {/* Footer */}
       <footer className="border-t border-orange-500/20 bg-gray-950/50 py-8">
         <div className="container mx-auto px-4 text-center text-gray-400">
-          <p>&copy; 2024 Alexandros Chariton. Built with ❤️ and lots of ☕</p>
+          <p>&copy; 2025 Alexandros Chariton. Built with love and some ☕</p>
           <p className="text-sm mt-2">
-            Thanks for visiting!
+            Thanks for stopping by!
           </p>
         </div>
       </footer>
