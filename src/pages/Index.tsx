@@ -1,10 +1,9 @@
 
 import { useState, useEffect } from "react";
-import { Github, ExternalLink, MessageCircle, X, User, Code, Brain, Star, GitFork, Download } from "lucide-react";
+import { Github, ExternalLink, MessageCircle, User, Code, Brain, Star, GitFork, Download, Mail, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 interface GitHubRepo {
   id: number;
@@ -30,7 +29,6 @@ interface HuggingFaceModel {
 }
 
 const Index = () => {
-  const [isAssistantOpen, setIsAssistantOpen] = useState(false);
   const [githubRepos, setGithubRepos] = useState<GitHubRepo[]>([]);
   const [isLoadingRepos, setIsLoadingRepos] = useState(true);
   const [huggingFaceModels, setHuggingFaceModels] = useState<HuggingFaceModel[]>([]);
@@ -145,10 +143,10 @@ const Index = () => {
             </Button>
             <Button 
               className="bg-orange-500 hover:bg-orange-600 text-gray-900"
-              onClick={() => setIsAssistantOpen(true)}
+              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
             >
               <MessageCircle className="mr-2 h-4 w-4" />
-              Talk to My Assistant
+              Contact Me
             </Button>
           </div>
         </div>
@@ -171,7 +169,7 @@ const Index = () => {
                 and machine learning solutions, mostly in e-commerce. I love what I do and I see myself more of a problem solver who does what needs to be done, rather than just an ML engineer.
               </p>
               <p>
-              When I'm not coding, I am doing something incredibly cool, but I can't tell you about it.
+              When I'm not coding, I am doing something incredibly cool, but I can't tell you about it. 
               </p>
             </CardContent>
           </Card>
@@ -192,7 +190,7 @@ const Index = () => {
                   <Badge 
                     key={index} 
                     variant="outline" 
-                    className="border-orange-500/50 text-orange-300 hover:bg-orange-500/20"
+                    className="border-orange-500 text-orange-400 hover:bg-orange-500/20"
                   >
                     {skill}
                   </Badge>
@@ -207,45 +205,313 @@ const Index = () => {
       <section id="projects" className="container mx-auto px-4 py-16">
         <h2 className="text-3xl font-bold mb-8 text-orange-400">Projects</h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {githubRepos.slice(0, 3).map((repo) => (
-            <Card key={repo.id} className="bg-gray-800 border-gray-700 hover:border-orange-500/50 transition-all group">
+          {/* Example Project with Multiple Links */}
+          <Card className="bg-gray-800 border-gray-700 hover:border-orange-500/50 transition-all group">
+            <CardHeader>
+              <CardTitle className="text-lg text-orange-300 group-hover:text-orange-400 transition-colors">
+                Llama Fine-Tuning Guide
+              </CardTitle>
+              <CardDescription className="text-gray-400">
+                A comprehensive guide on fine-tuning Llama 3.2 Instruct on your own data with code examples.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-center justify-between text-sm text-gray-400 mb-4">
+                <div className="flex items-center space-x-2">
+                  <Badge variant="outline" className="border-orange-500/50 text-orange-300">
+                    Medium
+                  </Badge>
+                  <Badge variant="outline" className="border-orange-500/50 text-orange-300">
+                    GitHub
+                  </Badge>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="w-full border-orange-500 text-orange-400 hover:bg-orange-500/20"
+                  onClick={() => window.open('https://medium.com/@alexandros_chariton/how-to-fine-tune-llama-3-2-instruct-on-your-own-data-a-detailed-guide-e5f522f397d7', '_blank')}
+                >
+                  <ExternalLink className="w-4 h-4 mr-2" />
+                  Read on Medium
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="w-full border-orange-500 text-orange-400 hover:bg-orange-500/20"
+                  onClick={() => window.open('https://github.com/AlexandrosChrtn/llama-fine-tune-guide', '_blank')}
+                >
+                  <Github className="w-4 h-4 mr-2" />
+                  View Code
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* AI Reddit Comment Generation Project */}
+          <Card className="bg-gray-800 border-gray-700 hover:border-orange-500/50 transition-all group">
               <CardHeader>
                 <CardTitle className="text-lg text-orange-300 group-hover:text-orange-400 transition-colors">
-                  {repo.name}
+                AI Reddit Comment Generation
                 </CardTitle>
                 <CardDescription className="text-gray-400">
-                  {repo.description || "No description available"}
+                A fine-tuned LLM from Mistral to generate top comments for Reddit that earned me a top 5% commenter badge.
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="flex items-center justify-between text-sm text-gray-400 mb-4">
-                  <span className="flex items-center">
-                    <span className="w-3 h-3 bg-orange-400 rounded-full mr-2"></span>
-                    {repo.language || "Unknown"}
-                  </span>
-                  <div className="flex items-center space-x-3">
-                    <span className="flex items-center">
-                      <Star className="w-4 h-4 mr-1" />
-                      {repo.stargazers_count}
-                    </span>
-                    <span className="flex items-center">
-                      <GitFork className="w-4 h-4 mr-1" />
-                      {repo.forks_count}
-                    </span>
-                  </div>
+                <div className="flex items-center space-x-2">
+                  <Badge variant="outline" className="border-orange-500/50 text-orange-300">
+                    Medium
+                  </Badge>
+                  <Badge variant="outline" className="border-orange-500/50 text-orange-300">
+                    GitHub
+                  </Badge>
                 </div>
+              </div>
+              <div className="space-y-2">
                 <Button 
                   variant="outline" 
                   size="sm" 
-                  className="w-full border-orange-500/50 text-orange-300 hover:bg-orange-500/20"
-                  onClick={() => window.open(repo.html_url, '_blank')}
+                  className="w-full border-orange-500 text-orange-400 hover:bg-orange-500/20"
+                  onClick={() => window.open('https://medium.com/@alexandros_chariton/engaging-reddit-comment-generation-with-multimodal-generative-ai-fine-tuning-pixtral-for-social-51a05f5bc208', '_blank')}
                 >
                   <ExternalLink className="w-4 h-4 mr-2" />
-                  View on GitHub
+                  Read on Medium
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="w-full border-orange-500 text-orange-400 hover:bg-orange-500/20"
+                  onClick={() => window.open('https://github.com/AlexandrosChrtn/pixtral-finetune', '_blank')}
+                >
+                  <Github className="w-4 h-4 mr-2" />
+                  View Code
+                </Button>
+                  </div>
+            </CardContent>
+                    </Card>
+
+          {/* Personal AI Assistant Project */}
+          <Card className="bg-gray-800 border-gray-700 hover:border-orange-500/50 transition-all group">
+            <CardHeader>
+              <CardTitle className="text-lg text-orange-300 group-hover:text-orange-400 transition-colors">
+                Personal AI Assistant
+              </CardTitle>
+              <CardDescription className="text-gray-400">
+                A customGPT I made to introduce myself in a more interactive way. It tends to oversell things but it's pretty cool!
+              </CardDescription>
+            </CardHeader>
+                        <CardContent>
+              <div className="flex items-center justify-between text-sm text-gray-400 mb-4">
+ 
+                <div className="flex items-center space-x-2">
+                  <Badge variant="outline" className="border-orange-500/50 text-orange-300">
+                    ChatGPT
+                  </Badge>
+                  <Badge variant="outline" className="border-orange-500/50 text-orange-300">
+                    GitHub
+                  </Badge>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="w-full border-orange-500 text-orange-400 hover:bg-orange-500/20"
+                  onClick={() => window.open('https://chatgpt.com/g/g-6860256211d4819192099591edd4d803-alexandros-chariton-v2-0', '_blank')}
+                >
+                  <ExternalLink className="w-4 h-4 mr-2" />
+                  Try Assistant
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="w-full border-orange-500 text-orange-400 hover:bg-orange-500/20"
+                  onClick={() => window.open('https://github.com/AlexandrosChrtn/MyCustomGPT-actions', '_blank')}
+                >
+                  <Github className="w-4 h-4 mr-2" />
+                  View Code
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Knowledge Distillation Tutorial Project */}
+          <Card className="bg-gray-800 border-gray-700 hover:border-orange-500/50 transition-all group">
+            <CardHeader>
+              <CardTitle className="text-lg text-orange-300 group-hover:text-orange-400 transition-colors">
+                Knowledge Distillation PyTorch Tutorial
+              </CardTitle>
+              <CardDescription className="text-gray-400">
+                An easy to follow tutorial explaining the reasoning behind the Knowledge Distillation method with logits as targets instead of hard labels in classification. Was hosted in the official PyTorch tutorial website.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-center justify-between text-sm text-gray-400 mb-4">
+ 
+                <Badge variant="outline" className="border-orange-500/50 text-orange-300">
+                  PyTorch
+                </Badge>
+              </div>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="w-full border-orange-500 text-orange-400 hover:bg-orange-500/20"
+                onClick={() => window.open('https://docs.pytorch.org/tutorials/beginner/knowledge_distillation_tutorial.html', '_blank')}
+              >
+                <ExternalLink className="w-4 h-4 mr-2" />
+                View Tutorial
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* AI Math Olympiad Project */}
+          <Card className="bg-gray-800 border-gray-700 hover:border-orange-500/50 transition-all group">
+            <CardHeader>
+              <CardTitle className="text-lg text-orange-300 group-hover:text-orange-400 transition-colors">
+                AI Math Olympiad Competition - Progress Prize 1
+              </CardTitle>
+              <CardDescription className="text-gray-400">
+                Finished top 8%. Created a notebook that leveraged LLMs to solve problems for Mathematical Olympiads. Worked in agentic mode with DeepSeek-math-7B with code execution.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-center justify-between text-sm text-gray-400 mb-4">
+ 
+                <Badge variant="outline" className="border-orange-500/50 text-orange-300">
+                  Kaggle
+                </Badge>
+              </div>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="w-full border-orange-500 text-orange-400 hover:bg-orange-500/20"
+                onClick={() => window.open('https://www.kaggle.com/competitions/ai-mathematical-olympiad-prize/', '_blank')}
+              >
+                <ExternalLink className="w-4 h-4 mr-2" />
+                View Competition
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* Child Mind Institute Sleep Detection Project */}
+          <Card className="bg-gray-800 border-gray-700 hover:border-orange-500/50 transition-all group">
+            <CardHeader>
+              <CardTitle className="text-lg text-orange-300 group-hover:text-orange-400 transition-colors">
+                Child Mind Institute Competition - Detect Sleep States
+              </CardTitle>
+              <CardDescription className="text-gray-400">
+                Finished top 15%. This was a timeseries classification competition, identifying patterns of sleep onset and wake from accelerometer data from multiple subjects across many days.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-center justify-between text-sm text-gray-400 mb-4">
+ 
+                <Badge variant="outline" className="border-orange-500/50 text-orange-300">
+                  Kaggle
+                </Badge>
+              </div>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="w-full border-orange-500 text-orange-400 hover:bg-orange-500/20"
+                onClick={() => window.open('https://www.kaggle.com/competitions/child-mind-institute-detect-sleep-states', '_blank')}
+              >
+                <ExternalLink className="w-4 h-4 mr-2" />
+                View Competition
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* ISIC Skin Cancer Detection Project */}
+          <Card className="bg-gray-800 border-gray-700 hover:border-orange-500/50 transition-all group">
+            <CardHeader>
+              <CardTitle className="text-lg text-orange-300 group-hover:text-orange-400 transition-colors">
+                ISIC 2024 - Skin Cancer Detection
+              </CardTitle>
+              <CardDescription className="text-gray-400">
+                Finished top 13% (374/2740 teams). Our solutions incorporated tabular and image data. Landed 70/2740 on the efficiency leaderboard that accounted for speed and accuracy.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-center justify-between text-sm text-gray-400 mb-4">
+ 
+                <Badge variant="outline" className="border-orange-500/50 text-orange-300">
+                  Kaggle
+                </Badge>
+              </div>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="w-full border-orange-500 text-orange-400 hover:bg-orange-500/20"
+                onClick={() => window.open('https://www.kaggle.com/competitions/isic-2024-challenge/overview', '_blank')}
+              >
+                <ExternalLink className="w-4 h-4 mr-2" />
+                View Competition
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* Melpogram Website Project */}
+          <Card className="bg-gray-800 border-gray-700 hover:border-orange-500/50 transition-all group">
+            <CardHeader>
+              <CardTitle className="text-lg text-orange-300 group-hover:text-orange-400 transition-colors">
+                Melpogram.com
+              </CardTitle>
+              <CardDescription className="text-gray-400">
+                A website I created using Lovable, Supabase and iterations with Cursor, as I was curious about the limits of LLMs in vibe coding. It is supposed to generate fresh images and inspirational quotes with AI.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-center justify-between text-sm text-gray-400 mb-4">
+ 
+                <Badge variant="outline" className="border-orange-500/50 text-orange-300">
+                  Website
+                </Badge>
+              </div>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="w-full border-orange-500 text-orange-400 hover:bg-orange-500/20"
+                onClick={() => window.open('https://melpogram.com', '_blank')}
+              >
+                <ExternalLink className="w-4 h-4 mr-2" />
+                Visit Website
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* Neural Processing Letters Publication */}
+          <Card className="bg-gray-800 border-gray-700 hover:border-orange-500/50 transition-all group">
+            <CardHeader>
+              <CardTitle className="text-lg text-orange-300 group-hover:text-orange-400 transition-colors">
+                Mutual Information Distillation
+              </CardTitle>
+              <CardDescription className="text-gray-400">
+                Proposed a novel methodology for knowledge distillation using an additional objective and optimized the process in photonic neural networks which are faster but can only simulate a handful of activation functions.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-center justify-between text-sm text-gray-400 mb-4">
+ 
+                <Badge variant="outline" className="border-orange-500/50 text-orange-300">
+                  Research Paper
+                </Badge>
+              </div>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="w-full border-orange-500 text-orange-400 hover:bg-orange-500/20"
+                onClick={() => window.open('https://link.springer.com/article/10.1007/s11063-023-11170-y', '_blank')}
+              >
+                <ExternalLink className="w-4 h-4 mr-2" />
+                Read Paper
                 </Button>
               </CardContent>
             </Card>
-          ))}
+            
         </div>
       </section>
 
@@ -376,14 +642,23 @@ const Index = () => {
         <h2 className="text-3xl font-bold mb-8 text-orange-400">Contact</h2>
         <Card className="bg-gray-800 border-gray-700 max-w-2xl mx-auto">
           <CardContent className="p-8">
-            <div className="space-y-4 text-center">
+            <div className="space-y-6 text-center">
               <p className="text-gray-300 text-lg">
                 Let's build something amazing together!
               </p>
-              <div className="flex justify-center space-x-4">
+              
+              <div className="space-y-3">
+                <div className="flex items-center justify-center space-x-2 text-gray-300">
+                  <Mail className="h-4 w-4 text-orange-400" />
+                  <span>alexandros at chariton.gr</span>
+                </div>
+              </div>
+
+              <div className="flex justify-center space-x-4 flex-wrap gap-2">
                 <Button 
                   variant="outline" 
                   className="border-orange-500 text-orange-400 hover:bg-orange-500 hover:text-gray-900"
+                  onClick={() => window.open('https://github.com/AlexandrosChrtn', '_blank')}
                 >
                   <Github className="mr-2 h-4 w-4" />
                   GitHub
@@ -391,8 +666,20 @@ const Index = () => {
                 <Button 
                   variant="outline" 
                   className="border-orange-500 text-orange-400 hover:bg-orange-500 hover:text-gray-900"
+                  onClick={() => window.open('https://x.com/alexchrtn', '_blank')}
                 >
-                  Email Me
+                  <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                  </svg>
+                  Twitter
+                </Button>
+                <Button 
+                  variant="outline" 
+                  className="border-orange-500 text-orange-400 hover:bg-orange-500 hover:text-gray-900"
+                  onClick={() => window.open('https://linkedin.com/in/alexandros-chariton', '_blank')}
+                >
+                  <Linkedin className="mr-2 h-4 w-4" />
+                  LinkedIn
                 </Button>
               </div>
             </div>
@@ -410,63 +697,7 @@ const Index = () => {
         </div>
       </footer>
 
-      {/* Floating Assistant Button */}
-      <Button
-        onClick={() => setIsAssistantOpen(true)}
-        className="fixed bottom-6 right-6 bg-orange-500 hover:bg-orange-600 text-gray-900 rounded-full p-4 shadow-lg z-50 animate-pulse"
-        size="lg"
-      >
-        <MessageCircle className="h-6 w-6" />
-      </Button>
 
-      {/* Assistant Dialog */}
-      <Dialog open={isAssistantOpen} onOpenChange={setIsAssistantOpen}>
-        <DialogContent className="bg-gray-800 border-gray-700 text-gray-100">
-          <DialogHeader>
-            <DialogTitle className="text-orange-400 flex items-center">
-              <MessageCircle className="mr-2 h-5 w-5" />
-              Talk to My AI Assistant
-            </DialogTitle>
-            <DialogDescription className="text-gray-300">
-              Get instant help and insights about my work, projects, and expertise.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="space-y-4">
-            <div className="bg-gray-900 p-4 rounded border-l-4 border-orange-500">
-              <p className="text-sm text-gray-300 mb-3">
-                My custom GPT assistant can help you with:
-              </p>
-              <ul className="text-sm text-gray-400 space-y-1">
-                <li>• Questions about my projects and experience</li>
-                <li>• Technical discussions and advice</li>
-                <li>• Collaboration opportunities</li>
-                <li>• General programming questions</li>
-              </ul>
-            </div>
-            <div className="flex space-x-3">
-              <Button 
-                className="flex-1 bg-orange-500 hover:bg-orange-600 text-gray-900"
-                onClick={() => {
-                  // This will link to your custom GPT
-                  window.open('https://chat.openai.com/g/g-your-custom-gpt-id', '_blank');
-                  setIsAssistantOpen(false);
-                }}
-              >
-                <ExternalLink className="mr-2 h-4 w-4" />
-                Open Assistant
-              </Button>
-              <Button 
-                variant="outline" 
-                className="border-gray-600 text-gray-300 hover:bg-gray-700"
-                onClick={() => setIsAssistantOpen(false)}
-              >
-                <X className="mr-2 h-4 w-4" />
-                Close
-              </Button>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 };
