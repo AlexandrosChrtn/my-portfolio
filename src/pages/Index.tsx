@@ -36,22 +36,22 @@ const Index = () => {
 
   // Fetch GitHub repositories and Hugging Face models
   useEffect(() => {
-    const fetchGitHubRepos = async () => {
+    const fetchPortfolioData = async () => {
       try {
-        const response = await fetch('https://api.github.com/users/AlexandrosChrtn/repos');
+        const response = await fetch('https://my-portfolio-server-lq50.onrender.com/portfolio-data');
         if (!response.ok) {
-          throw new Error('Failed to fetch repositories');
+          throw new Error('Failed to fetch portfolio data');
         }
-        const repos: GitHubRepo[] = await response.json();
+        const data = await response.json();
         
-        // Sort by stars (descending) and take top 2
-        const sortedRepos = repos
-          .sort((a, b) => b.stargazers_count - a.stargazers_count)
-          .slice(0, 2);
+        // Set GitHub repos from backend response
+        setGithubRepos(data.github_repos || []);
         
-        setGithubRepos(sortedRepos);
+        // Set Hugging Face models from backend response
+        setHuggingFaceModels(data.huggingface_models || []);
+        
       } catch (error) {
-        console.error('Error fetching GitHub repos:', error);
+        console.error('Error fetching portfolio data:', error);
         // Fallback to placeholder data on error
         setGithubRepos([
           {
@@ -65,36 +65,14 @@ const Index = () => {
             updated_at: "2025-06-16T15:55:58Z"
           }
         ]);
-      } finally {
-        setIsLoadingRepos(false);
-      }
-    };
-
-    const fetchHuggingFaceModels = async () => {
-      try {
-        const response = await fetch('https://huggingface.co/api/models?author=AlexandrosChariton');
-        if (!response.ok) {
-          throw new Error('Failed to fetch Hugging Face models');
-        }
-        const models: HuggingFaceModel[] = await response.json();
-        
-        // Sort by downloads (descending) and take top 2
-        const sortedModels = models
-          .sort((a, b) => b.downloads - a.downloads)
-          .slice(0, 2);
-        
-        setHuggingFaceModels(sortedModels);
-      } catch (error) {
-        console.error('Error fetching Hugging Face models:', error);
-        // Fallback to empty array on error
         setHuggingFaceModels([]);
       } finally {
+        setIsLoadingRepos(false);
         setIsLoadingModels(false);
       }
     };
 
-    fetchGitHubRepos();
-    fetchHuggingFaceModels();
+    fetchPortfolioData();
   }, []);
 
 
@@ -130,7 +108,7 @@ const Index = () => {
             Hi friend!
           </h1>
           <p className="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed">
-            ML Engineer who loves building things. I love fast paced environments and understanding what the user wants.
+            I'm Alex, an ML Engineer who loves building things. I love fast paced environments, feedback loops and my goal is to solve valuable real-world problems.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button 
