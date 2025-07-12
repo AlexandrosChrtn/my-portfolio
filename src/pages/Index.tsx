@@ -1,9 +1,10 @@
 
 import { useState, useEffect } from "react";
-import { Github, ExternalLink, MessageCircle, User, Code, Brain, Star, GitFork, Download, Mail, Linkedin } from "lucide-react";
+import { Github, ExternalLink, MessageCircle, User, Code, Brain, Star, GitFork, Download, Mail, Linkedin, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 interface GitHubRepo {
   id: number;
@@ -33,6 +34,7 @@ const Index = () => {
   const [isLoadingRepos, setIsLoadingRepos] = useState(true);
   const [huggingFaceModels, setHuggingFaceModels] = useState<HuggingFaceModel[]>([]);
   const [isLoadingModels, setIsLoadingModels] = useState(true);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Fetch GitHub repositories and Hugging Face models
   useEffect(() => {
@@ -92,12 +94,63 @@ const Index = () => {
           <div className="text-orange-400 text-xl font-bold">
             Alexandros Chariton
           </div>
+          
+          {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-6">
             <a href="#about" className="hover:text-orange-400 transition-colors">about</a>
             <a href="#projects" className="hover:text-orange-400 transition-colors">projects</a>
             <a href="#integrations" className="hover:text-orange-400 transition-colors">integrations</a>
             <a href="#contact" className="hover:text-orange-400 transition-colors">contact</a>
           </nav>
+
+          {/* Mobile Menu */}
+          <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+            <SheetTrigger asChild>
+              <Button 
+                variant="ghost" 
+                size="icon"
+                className="md:hidden text-orange-400 hover:text-orange-300 hover:bg-orange-500/20"
+              >
+                <Menu className="h-6 w-6" />
+                <span className="sr-only">Toggle menu</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent 
+              side="right" 
+              className="w-[300px] sm:w-[400px] bg-gray-950 border-l border-orange-500/20"
+            >
+              <nav className="flex flex-col space-y-6 mt-8">
+                <a 
+                  href="#about" 
+                  className="text-lg text-gray-300 hover:text-orange-400 transition-colors border-b border-gray-800 pb-3"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  about
+                </a>
+                <a 
+                  href="#projects" 
+                  className="text-lg text-gray-300 hover:text-orange-400 transition-colors border-b border-gray-800 pb-3"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  projects
+                </a>
+                <a 
+                  href="#integrations" 
+                  className="text-lg text-gray-300 hover:text-orange-400 transition-colors border-b border-gray-800 pb-3"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  integrations
+                </a>
+                <a 
+                  href="#contact" 
+                  className="text-lg text-gray-300 hover:text-orange-400 transition-colors border-b border-gray-800 pb-3"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  contact
+                </a>
+              </nav>
+            </SheetContent>
+          </Sheet>
         </div>
       </header>
 
