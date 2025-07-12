@@ -40,7 +40,7 @@ const Index = () => {
   useEffect(() => {
     const fetchPortfolioData = async () => {
       try {
-        const response = await fetch('https://my-portfolio-server-lq50.onrender.com/portfolio-data');
+        const response = await fetch('https://my-custom-gpt-apis.onrender.com/portfolio-data');
         if (!response.ok) {
           throw new Error('Failed to fetch portfolio data');
         }
